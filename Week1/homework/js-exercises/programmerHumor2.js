@@ -1,11 +1,11 @@
 "use strict";
-
+const url = "https://xkcd.com/info.0.json";
 // Inside the same file write two functions:
 
 // one with XMLHttpRequest,
 function getImgByXhr() {
   const xhr = new XMLHttpRequest();
-  const url = "https://xkcd.com/info.0.json"
+  
   xhr.responseType = "json";
 
   xhr.onload = function () {
@@ -31,9 +31,9 @@ function getImgByXhr() {
 
 //and the other with axios
 function getImgByAxios() {
-  const url2 = "https://xkcd.com/info.0.json";
 
-  axios.get(url2)
+
+  axios.get(url)
     .then(function (response) {
       // handle success
       const img = document.getElementById('humor-axios');
