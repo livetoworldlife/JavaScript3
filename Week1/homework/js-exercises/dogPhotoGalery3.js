@@ -1,7 +1,7 @@
 
 "use strict";
 
-
+const url = "https://dog.ceo/api/breeds/image/random";
 const buttonXhr = document.getElementById('xhr');
 const buttonAxios = document.getElementById('axios');
 const ul = document.querySelector('ul');
@@ -14,7 +14,7 @@ buttonAxios.onclick = getImgByAxios;
 // one with XMLHttpRequest,
 function getImgByXhr() {
   const xhr = new XMLHttpRequest();
-  const url = "https://dog.ceo/api/breeds/image/random"
+  
   xhr.responseType = "json";
 
   xhr.onload = function () {
@@ -40,9 +40,9 @@ function getImgByXhr() {
 
 //and the other with axios
 function getImgByAxios() {
-  const url2 = "https://dog.ceo/api/breeds/image/random";
 
-  axios.get(url2)
+
+  axios.get(url)
     .then(function (response) {
       // handle success
       const li = document.createElement('li');
