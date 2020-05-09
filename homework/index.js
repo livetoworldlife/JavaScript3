@@ -21,7 +21,7 @@
     parent.appendChild(elem);
     Object.entries(options).forEach(([key, value]) => {
       if (key === 'text') {
-        elem.textContent = value;
+        elem.innerHTML = value;
       } else {
         elem.setAttribute(key, value);
       }
@@ -30,10 +30,26 @@
   }
 
   function renderRepoDetails(repo, ul) {
-    createAndAppend('li', ul, { text: repo.name });
+    createAndAppend('li', ul, {
+      text:
+        `   <div class="repo-detail">
+              <p>Repository  : </p>
+              <p><a href=${repo.html_url}>${repo.name}</a></p>
+              <p>Description : </p>
+              <p>${(repo.description === null) ? 'No description, website, or topics provided.' : repo.description}</p>
+              <p>Forks : </p>
+              <p>${repo.forks}</p>
+              <p>Updated : </p>
+              <p> ${new Date(repo.updated_at).toLocaleString()}</p>
+            </div >
+      ` });
   }
 
+  // if there is an error create new div and return, else create ul and render foreach
   function main(url) {
+    // Add header
+    createAndAppend('h2', root, { text: 'HYF Repositories', id: 'hyf-header' });
+
     fetchJSON(url, (err, repos) => {
       const root = document.getElementById('root');
       if (err) {
@@ -43,9 +59,14 @@
         });
         return;
       }
+
       const ul = createAndAppend('ul', root);
-      repos.forEach(repo => renderRepoDetails(repo, ul));
+      // before create li sort and get first 10 
+      repos.sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }, { sensitivity: 'base' }))
+        .slice(0, 10)
+        .forEach(repo => renderRepoDetails(repo, ul));
     });
+
   }
 
   const HYF_REPOS_URL =

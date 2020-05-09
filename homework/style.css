@@ -1,3 +1,95 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 10%;
+  font-size: 1.4rem;
+}
+#root{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4% ;
+}
 .alert-error {
-  color: red;
+  color: rgb(167, 57, 92);
+  background-color: rgb(254, 212, 217);
+  padding: 4%;
+  margin: 1%;
+}
+
+#hyf-header{
+  color: rgb(255, 255, 255);
+  background-color: rgb(72, 66,184);
+  padding: 2%;
+}
+
+.repo-detail{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 6px 0 rgba(0, 0, 0, 0.19);
+  padding: 4% 2%;
+}
+.repo-detail p:nth-child(odd){
+  font-weight: bold;
+  flex: 1  20%;
+}
+.repo-detail p{
+  flex: 1  60%;
+  margin: 1% 2%;
+}
+
+
+li{
+  list-style: none;
+  margin: 1%;
+}
+@media screen and (min-width: 992px) and (max-width:1199px){   
+  body{
+    margin: 0 8%;
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width:991px){
+  body{
+    margin: 0 4%;
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width:767px){
+  body{
+    margin: 0 2%;
+    font-size: 1.1rem;
+  }
+  #hyf-header{
+    padding: 4%;
+  }
+}
+@media screen and (max-width:480px){
+  body{
+    margin: 0 1%;
+    font-size: 1rem;
+  }
+  .repo-detail {
+    display: flex;
+    flex-direction: column;
+  }
+  .repo-detail p{
+    margin-top: 2%;
+    padding: 2%;
+  }
+  .repo-detail p:nth-child(even){
+    margin-bottom: 2%;
+    background-color: rgb(245, 235, 235);
+  }
+  #hyf-header{
+    padding: 5%;
+  }
 }
