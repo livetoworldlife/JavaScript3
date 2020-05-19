@@ -23,7 +23,7 @@
      * @param {Object[]} repos An array of repository objects.
      */
     render(repos) {
-      createAndAppend('div', this.header, { text: this.account.name });
+      createAndAppend('h2', this.header, { text: 'HYF Repositories', id: 'hyf-header' });
       this.select = createAndAppend('select', this.header, {
         class: 'repo-select',
         autofocus: 'autofocus',

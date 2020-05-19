@@ -4,18 +4,15 @@
   const sectionRepo = document.querySelector('.repo-container');
   const sectionContributors = document.querySelector('.contributors-container');
 
-  function getFetch(url) {
-    fetch(url)
-      .then(response => {
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json') || !response.ok) {
-          const errorMessage = new Error("Oops, we haven't got JSON!");
-          return Promise.reject(errorMessage);
-        }
-        return response.json();
-      })
-      .then(data => { (sectionRepo.innerHTML === '') ? createOptionsOfSelect(data) : createContributors(data) })
-      .catch(errorMessage => (sectionRepo.innerHTML === '') ? createErrorDiv(errorMessage, sectionRepo) : createErrorDiv(errorMessage, sectionContributors));
+  // Want to use async/await? Add the `async` keyword to your outer function/method.
+  async function getFetch(url) {
+    try {
+      const response = await axios.get(url);
+      const data = await response.data;
+      (sectionRepo.innerHTML === '') ? createOptionsOfSelect(data) : createContributors(data)
+    } catch (error) {
+      (sectionRepo.innerHTML === '') ? createErrorDiv(error, sectionRepo) : createErrorDiv(error, sectionContributors);
+    }
   }
 
   // this function create an element or attribute and return it

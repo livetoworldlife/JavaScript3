@@ -14,7 +14,7 @@
       parent.appendChild(elem);
       Object.entries(options).forEach(([key, value]) => {
         if (key === 'text') {
-          elem.textContent = value;
+          elem.innerHTML = value;
         } else {
           elem.setAttribute(key, value);
         }

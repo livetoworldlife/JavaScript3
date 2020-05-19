@@ -1,5 +1,6 @@
 'use strict';
-
+// The Model class extends (inherits from) the Observable class
+//The Model class is concerned with all data handling (e.g. fetching). Extends the Observable class.
 {
   const { Observable } = window;
 

@@ -19,8 +19,19 @@
      * @param {Object} repo A repository object.
      */
     render(repo) {
-      // TODO: replace this comment and the console.log with your own code
-      console.log('RepoView', repo);
+      this.container.innerHTML = "";
+      createAndAppend('div', this.container, {
+        text:
+          ` <p>Repository  : </p>
+          <p><a href=${repo.html_url}>${repo.name}</a></p>
+          <p>Description : </p>
+          <p>${(repo.description === null) ? 'No description, website, or topics provided.' : repo.description}</p>
+          <p>Forks : </p>
+          <p>${repo.forks}</p>
+          <p>Updated : </p>
+          <p> ${new Date(repo.updated_at).toLocaleString()}</p> `,
+        class: "repo-detail"
+      });
     }
   }
 
