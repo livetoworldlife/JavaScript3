@@ -4,20 +4,6 @@
   const sectionRepo = document.querySelector('.repo-container');
   const sectionContributors = document.querySelector('.contributors-container');
 
-  function getFetch(url) {
-    fetch(url)
-      .then(response => {
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json') || !response.ok) {
-          const errorMessage = new Error("Oops, we haven't got JSON!");
-          return Promise.reject(errorMessage);
-        }
-        return response.json();
-      })
-      .then(data => { (sectionRepo.innerHTML === '') ? createOptionsOfSelect(data) : createContributors(data) })
-      .catch(errorMessage => (sectionRepo.innerHTML === '') ? createErrorDiv(errorMessage, sectionRepo) : createErrorDiv(errorMessage, sectionContributors));
-  }
-
   // this function create an element or attribute and return it
   function createAndAppend(name, parent, options = {}) {
     const elem = document.createElement(name);
@@ -30,14 +16,6 @@
       }
     });
     return elem;
-  }
-
-  // this function create a div an error message on section
-  function createErrorDiv(errorMessage, sectionName) {
-    createAndAppend('div', sectionName, {
-      text: errorMessage,
-      class: 'alert-error',
-    });
   }
 
   // this function create header s elements
@@ -62,13 +40,13 @@
       });
     });
     // At start-up your application should display information about the first repository as displayed in the select element.
-    onChangeSelect(0, data);
+    onChangeSelect(data);
     // When the user changes the selection, the information in the web page should be refreshed for the newly selected repository.
-    select.addEventListener('change', (event) => { onChangeSelect(event, data) });
+    select.addEventListener('change', () => onChangeSelect(data));
   }
 
   // this function create repositories when onchange the select value
-  function onChangeSelect(event, repos) {
+  function onChangeSelect(repos) {
     sectionRepo.innerHTML = '';
     const select = document.querySelector('select');
     const selectedText = select.options[select.selectedIndex].text;
@@ -88,7 +66,22 @@
     });
     // contributors fetch
     const contUrl = filteredRepo[0].contributors_url;
-    getFetch(contUrl);
+    fetch(contUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        createContributors(data);
+      })
+      .catch(error => {
+        createAndAppend('div', sectionContributors, {
+          text: error,
+          class: 'alert-error',
+        });
+      });
   }
 
   function createContributors(data) {
@@ -110,7 +103,22 @@
     // Add header
     createHeader();
     // fetch for repos
-    getFetch(url);
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        createOptionsOfSelect(data);
+      })
+      .catch(error => {
+        createAndAppend('div', sectionRepo, {
+          text: error,
+          class: 'alert-error',
+        });
+      });
   }
 
   const HYF_REPOS_URL =
